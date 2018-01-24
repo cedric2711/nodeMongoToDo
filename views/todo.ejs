@@ -22,29 +22,9 @@
                 <input type="submit" />
             </p>
         </form>
-        <div class=container>
-        <% todolist.forEach(function(todo, index) { %>
-              <div class="row taskBlock">
-                <div class="col-sm-9 taskSpecified">
-                  <%= todo.task %>
-                </div>
-                <div class="col-sm-3 actionBlock container">
-                  <div class="row" >
-                    <a href="/todo/delete/<%= index %>" class="col-sm">
-                      <% if(todo.completed==false){ %>
-                          x
-                      <% }else{ %>
-                          y
-                      <% } %>
-                    </a>
-                    <a href="/todo/prio/<%= index %>" class="col-sm">Priority</a>
-                  </div>
-                </div>
-              </div>
-
-        <% }); %>
+      <div class="container">
+        <%- include("taskView",{"todolist":todolist}) %>
       </div>
-
 
     </body>
 </html>

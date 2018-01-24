@@ -1,0 +1,38 @@
+<% todolist.forEach(function(todo, index) { %>
+  <div class="row taskBlock">
+    <div class="col-sm-6 taskSpecified">
+      <%= (index+1)+'. '+todo.task %>
+    </div>
+    <div class="col-sm-6 actionBlock container">
+      <div class="row">
+        <div class="col-sm-4 statusButtonBlock">
+          <div class="dropdown statusButton">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= todo.status %>
+                </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonStatus">
+              <a class="dropdown-item" href="/todo/status/<%= index %>:Accepted">Accepted</a>
+              <a class="dropdown-item" href="/todo/status/<%= index %>:Complete">Complete</a>
+              <a class="dropdown-item" href="/todo/status/<%= index %>:InProgress">InProgress</a>
+              <a class="dropdown-item" href="/todo/status/<%= index %>:Rejected">Rejected</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 priorityButtonBlock">
+          <div class=" col-sm-4 dropdown proprityButton">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= todo.priority %>
+                </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPriority">
+              <a class="dropdown-item" href="/todo/prio/<%= index %>:Low">Low</a>
+              <a class="dropdown-item" href="/todo/prio/<%= index %>:Medium">Medium</a>
+              <a class="dropdown-item" href="/todo/prio/<%= index %>:High">High</a>
+            </div>
+          </div>
+        </div>
+        <a href="/todo/add/<%= index %>" class="col-sm-4 btn btn-secondary btn-lg" role="button" aria-pressed="true">Add</a>
+      </div>
+    </div>
+  </div>
+
+  <% }); %>

@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('cookie-session'); // Loads the piece of middleware for sessions
 var bodyParser = require('body-parser'); // Loads the piece of middleware for managing the settings
+var extraJS=require('./dbrequests');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 var app = express();
@@ -16,6 +17,8 @@ we create an empty one in the form of an array before continuing */
     if (typeof(req.session.todolist) == 'undefined') {
         req.session.todolist = [];
     }
+    extraJS;
+
     next();
 })
 
@@ -27,7 +30,7 @@ we create an empty one in the form of an array before continuing */
 /* Adding an item to the to do list */
 .post('/todo/add/', urlencodedParser, function(req, res) {
     if (req.body.newtodo != '') {
-        req.session.todolist.push({"task":req.body.newtodo,"priority":"","completed":false});
+        req.session.todolist.push({"task":req.body.newtodo,"priority":"Medium","completed":false,"status":"New"});
     }
     res.redirect('/todo');
 })
@@ -42,9 +45,33 @@ we create an empty one in the form of an array before continuing */
 })
 
 /* Deletes an item from the to do list */
-.get('/todo/prio/:id', function(req, res) {
+.get('/todo/prio/:priStr', function(req, res) {
   debugger;
-    if (req.params.id != '') {
+    if (req.params.priStr != '') {
+      var setPrio=req.params.priStr.split(":");
+      req.session.todolist[setPrio[0]].priority=setPrio[1];
+      //  req.session.todolist.splice(req.params.id, 1);
+    }
+    res.redirect('/todo');
+})
+
+/* Deletes an item from the to do list */
+.get('/todo/status/:staStr', function(req, res) {
+  debugger;
+    if (req.params.staStr != '') {
+      var setStatus=req.params.staStr.split(":");
+      req.session.todolist[setStatus[0]].status=setStatus[1];
+      //  req.session.todolist.splice(req.params.id, 1);
+    }
+    res.redirect('/todo');
+})
+
+/* Deletes an item from the to do list */
+.get('/todo/add/:addStr', function(req, res) {
+  debugger;
+    if (req.params.addStr != '') {
+    //  var setStatus=req.params.staStr.split(":");
+    //  req.session.todolist[setStatus[0]].status=setStatus[1];
       //  req.session.todolist.splice(req.params.id, 1);
     }
     res.redirect('/todo');
